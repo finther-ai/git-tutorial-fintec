@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="FINTEC AI — GitLab Learning Roadmap. A beginner-friendly, visual path from 'what is GitLab?' to your first merged Merge Request.">
+<title>FINTEC AI · GitLab Learning Roadmap</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🟣%3C/text%3E%3C/svg%3E">
+<style>
+  /* ============ THEME ============ */
+  :root{
+    --bg:#0b0514;
+    --bg-2:#140a26;
+    --card:rgba(139,92,246,.07);
+    --card-hover:rgba(139,92,246,.14);
+    --border:rgba(167,139,250,.18);
+    --border-strong:rgba(167,139,250,.45);
+    --text:#ece7f8;
+    --muted:#a79bc9;
+    --accent:#8b5cf6;
+    --accent-soft:#a78bfa;
+    --cyan:#22d3ee;
+    --fuchsia:#e879f9;
+    --emerald:#34d399;
+    --amber:#fbbf24;
+    --shadow:0 8px 32px rgba(0,0,0,.45);
+    --radius:16px;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  ::selection{background:rgba(139,92,246,.45)}
+
+  /* ============ AMBIENT BACKGROUND ============ */
+  .bg-fx{position:fixed;inset:0;z-index:-2;background:
+    radial-gradient(ellipse 80% 50% at 20% -10%, rgba(139,92,246,.22), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 85% 10%, rgba(34,211,238,.10), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(232,121,249,.10), transparent 60%),
+    var(--bg);}
+  .bg-grid{position:fixed;inset:0;z-index:-1;opacity:.5;pointer-events:none;background-image:
+    linear-gradient(rgba(167,139,250,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167,139,250,.05) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+    -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);}
+
+  /* ============ PROGRESS BAR ============ */
+  .progress-wrap{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    background:rgba(11,5,20,.75);border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:14px;padding:10px 22px;
+  }
+  .progress-track{flex:1;height:6px;border-radius:99px;background:rgba(167,139,250,.15);overflow:hidden}
+  .progress-fill{height:100%;width:0%;border-radius:99px;
+    background:linear-gradient(90deg,var(--accent),var(--cyan));
+    box-shadow:0 0 12px rgba(139,92,246,.8);transition:width .5s cubic-bezier(.22,1,.36,1)}
+  .progress-label{font-size:.8rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .progress-label b{color:var(--accent-soft)}
+  .reset-btn{font-size:.72rem;color:var(--muted);background:none;border:1px solid var(--border);
+    border-radius:99px;padding:4px 12px;cursor:pointer;font-family:var(--font);transition:.2s}
+  .reset-btn:hover{color:var(--text);border-color:var(--border-strong)}
+
+  /* ============ LAYOUT ============ */
+  .wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+  section{padding:64px 0}
+
+  /* ============ HERO ============ */
+  .hero{padding:110px 0 70px;text-align:center;position:relative}
+  .logo-mark{width:76px;height:76px;margin:0 auto 26px;border-radius:22px;position:relative;
+    background:linear-gradient(135deg,var(--accent),#6d28d9 55%,var(--cyan));
+    box-shadow:0 0 40px rgba(139,92,246,.55), inset 0 0 24px rgba(255,255,255,.12);
+    display:flex;align-items:center;justify-content:center;
+    animation:float 6s ease-in-out infinite}
+  .logo-mark svg{width:42px;height:42px;fill:#fff}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--accent-soft);border:1px solid var(--border);
+    padding:7px 18px;border-radius:99px;margin-bottom:22px;background:rgba(139,92,246,.08)}
+  .kicker::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);
+    box-shadow:0 0 10px var(--cyan)}
+  h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:800;letter-spacing:-.02em;line-height:1.12}
+  h1 .grad{background:linear-gradient(100deg,var(--accent-soft),var(--cyan) 55%,var(--fuchsia));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p.tagline{max-width:640px;margin:20px auto 0;color:var(--muted);font-size:1.08rem}
+  .hero-badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+  .hbadge{font-size:.76rem;padding:6px 14px;border-radius:99px;border:1px solid var(--border);
+    color:var(--muted);background:rgba(139,92,246,.07)}
+  .hbadge b{color:var(--text);font-weight:600}
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:36px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 28px;border-radius:12px;
+    font-weight:600;font-size:.95rem;text-decoration:none;transition:.25s;cursor:pointer;border:none;font-family:var(--font)}
+  .btn-primary{background:linear-gradient(120deg,var(--accent),#7c3aed);color:#fff;
+    box-shadow:0 6px 26px rgba(139,92,246,.45)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(139,92,246,.6)}
+  .btn-ghost{color:var(--text);border:1px solid var(--border-strong);background:rgba(139,92,246,.06)}
+  .btn-ghost:hover{background:var(--card-hover);transform:translateY(-2px)}
+
+  /* ============ SECTION HEADERS ============ */
+  .sec-head{text-align:center;margin-bottom:44px}
+  .sec-head .eyebrow{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--accent-soft);margin-bottom:10px;display:block}
+  .sec-head h2{font-size:clamp(1.5rem,3.4vw,2.2rem);font-weight:750;letter-spacing:-.01em}
+  .sec-head p{color:var(--muted);max-width:560px;margin:12px auto 0;font-size:.97rem}
+
+  /* ============ START HERE ============ */
+  .start-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:26px 24px;position:relative;transition:.25s}
+  .step:hover{transform:translateY(-4px);border-color:var(--border-strong);background:var(--card-hover)}
+  .step .n{font-size:2.5rem;font-weight:800;line-height:1;
+    background:linear-gradient(120deg,var(--accent-soft),var(--cyan));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .step h3{margin:14px 0 8px;font-size:1.05rem}
+  .step p{color:var(--muted);font-size:.9rem}
+  .step a{color:var(--cyan);text-decoration:none;font-weight:600}
+  .step a:hover{text-decoration:underline}
+  .callout{margin-top:20px;text-align:center;color:var(--muted);font-size:.9rem}
+  .callout a{color:var(--accent-soft);text-decoration:none;font-weight:600}
+  .callout a:hover{text-decoration:underline}
+
+  /* ============ WORKFLOW ============ */
+  .flow{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px}
+  .flow-node{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:12px;
+    background:var(--card);border:1px solid var(--border);text-decoration:none;color:var(--text);
+    font-size:.88rem;font-weight:600;transition:.22s;white-space:nowrap}
+  .flow-node:hover{border-color:var(--border-strong);background:var(--card-hover);transform:translateY(-2px)}
+  .flow-node .ico{font-size:1.05rem}
+  .flow-arrow{color:var(--accent-soft);font-size:1rem;opacity:.7;user-select:none}
+  .flow-loop{width:100%;text-align:center;color:var(--muted);font-size:.85rem;margin-top:10px}
+  .flow-loop a{color:var(--cyan);text-decoration:none}
+  .flow-loop a:hover{text-decoration:underline}
+
+  /* ============ QUICK NAV ============ */
+  .chip-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+  .chip{display:flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    text-decoration:none;font-size:.88rem;transition:.2s}
+  .chip:hover{border-color:var(--cyan);background:var(--card-hover);transform:translateX(3px)}
+  .chip .arr{margin-left:auto;color:var(--accent-soft);opacity:0;transition:.2s}
+  .chip:hover .arr{opacity:1}
+
+  /* ============ PHASES ============ */
+  .phase{margin-bottom:26px}
+  .phase-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .phase-tag{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;
+    padding:5px 14px;border-radius:99px;border:1px solid}
+  .phase-head h3{font-size:1.3rem;font-weight:750}
+  .phase-head .count{color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+  .phase-head .pdesc{width:100%;color:var(--muted);font-size:.92rem}
+  .p1{color:var(--cyan);border-color:rgba(34,211,238,.4)}
+  .p2{color:var(--accent-soft);border-color:rgba(139,92,246,.45)}
+  .p3{color:var(--fuchsia);border-color:rgba(232,121,249,.4)}
+  .p4{color:var(--emerald);border-color:rgba(52,211,153,.4)}
+  .p5{color:var(--amber);border-color:rgba(251,191,36,.4)}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-top:20px}
+  .card{position:relative;display:flex;flex-direction:column;gap:10px;
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:20px;transition:.25s;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s;pointer-events:none;
+    background:radial-gradient(320px 120px at 20% 0%, rgba(139,92,246,.14), transparent 70%)}
+  .card:hover{transform:translateY(-4px);border-color:var(--border-strong);box-shadow:var(--shadow)}
+  .card:hover::before{opacity:1}
+  .card-top{display:flex;align-items:center;justify-content:space-between}
+  .card .num{font-family:var(--mono);font-weight:700;font-size:.95rem;letter-spacing:.04em}
+  .p1c{color:var(--cyan)}.p2c{color:var(--accent-soft)}.p3c{color:var(--fuchsia)}
+  .p4c{color:var(--emerald)}.p5c{color:var(--amber)}
+  .card h4{font-size:.99rem;font-weight:650;line-height:1.35}
+  .card a.cardlink{color:var(--text);text-decoration:none}
+  .card a.cardlink::after{content:"";position:absolute;inset:0;z-index:1}
+  .card .desc{color:var(--muted);font-size:.84rem;flex:1}
+  .card-meta{display:flex;align-items:center;gap:8px;font-size:.74rem;color:var(--muted)}
+  .lvl{padding:3px 10px;border-radius:99px;border:1px solid var(--border);background:rgba(255,255,255,.03)}
+  .card a.cardlink:hover h4{color:var(--cyan)}
+
+  .done-btn{position:relative;z-index:2;flex-shrink:0;width:26px;height:26px;border-radius:8px;
+    border:1.5px solid var(--border-strong);background:transparent;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;color:transparent;transition:.2s;font-size:.85rem}
+  .done-btn:hover{border-color:var(--emerald);background:rgba(52,211,153,.12)}
+  .card.done{border-color:rgba(52,211,153,.5)}
+  .card.done .done-btn{background:var(--emerald);border-color:var(--emerald);color:#06281d}
+  .card.done h4{opacity:.55}
+  .card.done h4::after{content:" ✓";color:var(--emerald)}
+
+  /* ============ FOOTER ============ */
+  footer{border-top:1px solid var(--border);padding:44px 22px 60px;text-align:center;color:var(--muted);font-size:.88rem}
+  footer .f-links{display:flex;flex-wrap:wrap;gap:22px;justify-content:center;margin-bottom:18px}
+  footer a{color:var(--accent-soft);text-decoration:none}
+  footer a:hover{text-decoration:underline}
+  .disclaimer{max-width:640px;margin:0 auto;font-size:.8rem;opacity:.8}
+
+  /* ============ REVEAL ANIMATION ============ */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
+  .reveal.visible{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1;transform:none;transition:none}
+    .logo-mark{animation:none}
+    *{transition-duration:.01ms!important}
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:640px){
+    .progress-wrap{padding:9px 12px;gap:8px}
+    .progress-label span.hide-sm{display:none}
+    .hero{padding:84px 0 48px}
+    section{padding:44px 0}
+    .cards{grid-template-columns:1fr}
+    .flow-arrow{width:100%;text-align:center;transform:rotate(90deg)}
+    .btn{width:100%;justify-content:center}
+    .cta-row{width:100%}
+  }
+</style>
+</head>
+<body>
+<div class="bg-fx" aria-hidden="true"></div>
+<div class="bg-grid" aria-hidden="true"></div>
+
+<!-- ============ PROGRESS ============ -->
+<div class="progress-wrap" role="status" aria-label="Learning progress">
+  <span class="progress-label"><b id="done-count">0</b><span class="hide-sm">&nbsp;/ 30 guides</span></span>
+  <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+  <span class="progress-label" id="progress-pct">0%</span>
+  <button class="reset-btn" id="reset-btn" type="button">Reset</button>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero wrap">
+  <div class="logo-mark" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 8.5 5.5 21h13L22 8.5 12 2zm0 2.6l7 4.7-2.6 8.9H7.6L5 9.3l7-4.7zM9.5 10.5a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4zm5 0a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4z"/></svg>
+  </div>
+  <span class="kicker">FINTEC AI · Internal Engineering Resource</span>
+  <h1>GitLab Learning <span class="grad">Roadmap</span></h1>
+  <p class="tagline">From <b>“what is a repository?”</b> to your first merged Merge Request —
+    a beginner-friendly path with zero assumed experience.</p>
+  <div class="hero-badges">
+    <span class="hbadge"><b>34</b> guides</span>
+    <span class="hbadge"><b>~4 h</b> total</span>
+    <span class="hbadge">Level: <b>absolute beginner</b></span>
+    <span class="hbadge">Group: <b>ai-fintec</b></span>
+    <span class="hbadge">Progress saves <b>in this browser</b></span>
+  </div>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/01-what-is-gitlab.md" target="_blank" rel="noopener">🚀 Start with Guide 01</a>
+    <a class="btn btn-ghost" href="#roadmap">🗺️ View the roadmap</a>
+    <a class="btn btn-ghost" href="https://gitlab.com/ai-fintec/git-tutorial-fintec" target="_blank" rel="noopener">📁 GitLab project</a>
+  </div>
+</header>
+
+<main>
+  <!-- ============ START HERE ============ -->
+  <section id="start-here" class="wrap reveal">
+    <div class="sec-head">
+      <span class="eyebrow">Start Here</span>
+      <h2>Three moves to begin</h2>
+      <p>New employee? This is your whole onboarding-in-GitLab, compressed.</p>
+    </div>
+    <div class="start-grid">
+      <div class="step">
+        <div class="n">1</div>
+        <h3>Understand the why</h3>
+        <p><a href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/01-what-is-gitlab.md" target="_blank" rel="noopener">Guide 01 · What is GitLab?</a> — 5 minutes, plain English, no jargon.</p>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <h3>Create your account</h3>
+        <p><a href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/02-create-your-gitlab-account.md" target="_blank" rel="noopener">Guide 02 · Step-by-step</a> — plus a professional username and 2FA.</p>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <h3>Follow the numbers</h3>
+        <p>Guides <b>03 → 30</b> below, in order. Each ends with a link to the next. That's it.</p>
+      </div>
+    </div>
+    <p class="callout">Tick the ◻ button on each card as you finish — your progress is tracked in the bar at the top (saved locally in this browser).</p>
+  </section>
+
+  <!-- ============ WORKFLOW ============ -->
+  <section id="workflow" class="wrap reveal">
+    <div class="sec-head">
+      <span class="eyebrow">The FINTEC Workflow</span>
+      <h2>One loop to memorise</h2>
+      <p>Every task at FINTEC follows the same eight steps. Click any step to learn it.</p>
+    </div>
+    <div class="flow" aria-label="The FINTEC workflow: Issue, Branch, Work, Commit, Push, Merge Request, Review, Merge">
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/23-issues.md" target="_blank" rel="noopener"><span class="ico">🎫</span>Issue</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/14-branches.md" target="_blank" rel="noopener"><span class="ico">🌿</span>Branch</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/15-making-changes.md" target="_blank" rel="noopener"><span class="ico">✏️</span>Work</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/16-commits.md" target="_blank" rel="noopener"><span class="ico">📸</span>Commit</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/17-push.md" target="_blank" rel="noopener"><span class="ico">⬆️</span>Push</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/19-create-a-merge-request.md" target="_blank" rel="noopener"><span class="ico">🔀</span>Merge Request</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/20-review-a-merge-request.md" target="_blank" rel="noopener"><span class="ico">👀</span>Review</a><span class="flow-arrow" aria-hidden="true">→</span>
+      <a class="flow-node" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/21-approve-and-merge.md" target="_blank" rel="noopener"><span class="ico">✅</span>Merge</a>
+      <span class="flow-loop">…then back to a new <a href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/23-issues.md" target="_blank" rel="noopener">Issue</a>. Full picture: <a href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/26-the-fintec-workflow.md" target="_blank" rel="noopener">Guide 26</a></span>
+    </div>
+  </section>
+
+  <!-- ============ QUICK NAV ============ -->
+  <section id="i-want-to" class="wrap reveal">
+    <div class="sec-head">
+      <span class="eyebrow">Task-First Navigation</span>
+      <h2>“I want to…”</h2>
+      <p>Skip the order — jump straight to the thing you need right now.</p>
+    </div>
+    <div class="chip-grid">
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/02-create-your-gitlab-account.md" target="_blank" rel="noopener">👤 Create a GitLab account <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/05-create-or-join-a-project.md" target="_blank" rel="noopener">🔑 Get access to a project <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/09-create-and-upload-files.md" target="_blank" rel="noopener">✏️ Fix a file — no installs <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/11-clone-a-project.md" target="_blank" rel="noopener">💻 Get a project on my computer <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/12-git-concepts-in-plain-english.md" target="_blank" rel="noopener">🧠 Understand Git, plain English <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/13-everyday-git-commands.md" target="_blank" rel="noopener">⌨️ Find the right command <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/19-create-a-merge-request.md" target="_blank" rel="noopener">🔀 Ask for my code to be merged <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/20-review-a-merge-request.md" target="_blank" rel="noopener">👀 Review a teammate's work <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/23-issues.md" target="_blank" rel="noopener">🐞 Report a bug / request <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/22-fix-merge-conflicts.md" target="_blank" rel="noopener">⚔️ Resolve a merge conflict <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/28-common-mistakes-and-recovery.md" target="_blank" rel="noopener">🩹 Undo a mistake <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/29-security-basics.md" target="_blank" rel="noopener">🔐 Handle passwords &amp; secrets <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/30-what-do-i-do-next.md" target="_blank" rel="noopener">🆘 I'm stuck — what now? <span class="arr">→</span></a>
+      <a class="chip" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/25-readme-and-documentation.md" target="_blank" rel="noopener">📖 Write a good README <span class="arr">→</span></a>
+    </div>
+  </section>
+
+  <!-- ============ ROADMAP ============ -->
+  <section id="roadmap" class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The Learning Roadmap</span>
+      <h2>Beginner → Intermediate, in four parts</h2>
+      <p>Read in order, or use the level labels to hop around. Finish all 30 and you're self-sufficient on GitLab.</p>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase reveal" id="phase-1">
+      <div class="phase-head">
+        <span class="phase-tag p1">Part 1 · Foundations</span>
+        <h3>Get set up</h3>
+        <span class="count" data-phase="1"></span>
+        <span class="pdesc">From “what is GitLab?” to knowing exactly what you're allowed to do.</span>
+      </div>
+      <div class="cards">
+        <article class="card reveal" data-id="g01">
+          <div class="card-top"><span class="num p1c">01</span><button class="done-btn" type="button" aria-label="Mark guide 01 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/01-what-is-gitlab.md" target="_blank" rel="noopener"><h4>What is GitLab, and why does FINTEC use it?</h4></a>
+          <p class="desc">The big picture in plain English — repository, commit, and Merge Request defined before you touch anything.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~5 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g02">
+          <div class="card-top"><span class="num p1c">02</span><button class="done-btn" type="button" aria-label="Mark guide 02 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/02-create-your-gitlab-account.md" target="_blank" rel="noopener"><h4>Create your GitLab account</h4></a>
+          <p class="desc">Sign-up, a professional username, email verification, and recommended 2FA setup.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g03">
+          <div class="card-top"><span class="num p1c">03</span><button class="done-btn" type="button" aria-label="Mark guide 03 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/03-sign-in-and-the-interface.md" target="_blank" rel="noopener"><h4>Sign in &amp; understand the interface</h4></a>
+          <p class="desc">Where everything lives — and how to never feel lost in GitLab again.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g04">
+          <div class="card-top"><span class="num p1c">04</span><button class="done-btn" type="button" aria-label="Mark guide 04 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/04-groups-projects-and-repositories.md" target="_blank" rel="noopener"><h4>Groups → Projects → Repositories</h4></a>
+          <p class="desc">How GitLab organizes everything, and what each word actually means.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~7 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g05">
+          <div class="card-top"><span class="num p1c">05</span><button class="done-btn" type="button" aria-label="Mark guide 05 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/05-create-or-join-a-project.md" target="_blank" rel="noopener"><h4>Create or join a project</h4></a>
+          <p class="desc">Getting added by your lead, access requests, and what 404 really means.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~7 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g06">
+          <div class="card-top"><span class="num p1c">06</span><button class="done-btn" type="button" aria-label="Mark guide 06 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/06-roles-and-permissions.md" target="_blank" rel="noopener"><h4>Roles and permissions</h4></a>
+          <p class="desc">Guest → Owner: what your role allows, and why you can't push to <code>main</code>.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~7 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g07">
+          <div class="card-top"><span class="num p1c">07</span><button class="done-btn" type="button" aria-label="Mark guide 07 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/07-how-fintec-organizes-projects.md" target="_blank" rel="noopener"><h4>How FINTEC organizes projects</h4></a>
+          <p class="desc">Recommended group hygiene — one project, one purpose, predictable names.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~7 min</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase reveal" id="phase-2">
+      <div class="phase-head">
+        <span class="phase-tag p2">Part 2 · Your first work</span>
+        <h3>Browser → terminal</h3>
+        <span class="count" data-phase="2"></span>
+        <span class="pdesc">Create and edit without installing anything, then learn Git at beginner speed.</span>
+      </div>
+      <div class="cards">
+        <article class="card reveal" data-id="g08">
+          <div class="card-top"><span class="num p2c">08</span><button class="done-btn" type="button" aria-label="Mark guide 08 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/08-create-a-project-from-scratch.md" target="_blank" rel="noopener"><h4>Create a project from scratch</h4></a>
+          <p class="desc">Every click, every field — plus the 60-second setup checklist for new projects.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g09">
+          <div class="card-top"><span class="num p2c">09</span><button class="done-btn" type="button" aria-label="Mark guide 09 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/09-create-and-upload-files.md" target="_blank" rel="noopener"><h4>Create &amp; upload files</h4></a>
+          <p class="desc">Web editor and Web IDE — create, edit, and upload with zero installation.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g10">
+          <div class="card-top"><span class="num p2c">10</span><button class="done-btn" type="button" aria-label="Mark guide 10 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/10-choosing-your-tool.md" target="_blank" rel="noopener"><h4>Choosing your tool</h4></a>
+          <p class="desc">Web vs Web IDE vs Git vs <code>glab</code> — plus Git install, identity, and access tokens.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g11">
+          <div class="card-top"><span class="num p2c">11</span><button class="done-btn" type="button" aria-label="Mark guide 11 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/11-clone-a-project.md" target="_blank" rel="noopener"><h4>Clone a project</h4></a>
+          <p class="desc">First terminal guide: HTTPS clone, token login, and what you just downloaded.</p>
+          <div class="card-meta"><span class="lvl">Beginner · terminal</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g12">
+          <div class="card-top"><span class="num p2c">12</span><button class="done-btn" type="button" aria-label="Mark guide 12 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/12-git-concepts-in-plain-english.md" target="_blank" rel="noopener"><h4>Git concepts in plain English</h4></a>
+          <p class="desc">The six ideas behind every command — plus a glossary of words you'll overhear.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g13">
+          <div class="card-top"><span class="num p2c">13</span><button class="done-btn" type="button" aria-label="Mark guide 13 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/13-everyday-git-commands.md" target="_blank" rel="noopener"><h4>Everyday Git commands</h4></a>
+          <p class="desc">The only six commands you need — with a printable cheatsheet card.</p>
+          <div class="card-meta"><span class="lvl">Beginner · terminal</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g14">
+          <div class="card-top"><span class="num p2c">14</span><button class="done-btn" type="button" aria-label="Mark guide 14 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/14-branches.md" target="_blank" rel="noopener"><h4>Branches — why &amp; how</h4></a>
+          <p class="desc">One task = one branch. Four ways to create one, from browser to terminal.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g15">
+          <div class="card-top"><span class="num p2c">15</span><button class="done-btn" type="button" aria-label="Mark guide 15 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/15-making-changes.md" target="_blank" rel="noopener"><h4>Making changes</h4></a>
+          <p class="desc">The golden rule, the daily rhythm, and the habits that prevent 80% of pain.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~7 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g16">
+          <div class="card-top"><span class="num p2c">16</span><button class="done-btn" type="button" aria-label="Mark guide 16 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/16-commits.md" target="_blank" rel="noopener"><h4>Commits</h4></a>
+          <p class="desc">Snapshot mechanics + commit messages people thank you for. With a secret scan.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~8 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g17">
+          <div class="card-top"><span class="num p2c">17</span><button class="done-btn" type="button" aria-label="Mark guide 17 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/17-push.md" target="_blank" rel="noopener"><h4>Push</h4></a>
+          <p class="desc">Upload your work — and why <code>--force</code> is banned at FINTEC.</p>
+          <div class="card-meta"><span class="lvl">Beginner · terminal</span><span>⏱ ~7 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g18">
+          <div class="card-top"><span class="num p2c">18</span><button class="done-btn" type="button" aria-label="Mark guide 18 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/18-pull.md" target="_blank" rel="noopener"><h4>Pull</h4></a>
+          <p class="desc">Stay in sync — the habit that makes conflicts rare and merges boring.</p>
+          <div class="card-meta"><span class="lvl">Beginner · terminal</span><span>⏱ ~7 min</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase reveal" id="phase-3">
+      <div class="phase-head">
+        <span class="phase-tag p3">Part 3 · Working as a team</span>
+        <h3>The heart of GitLab</h3>
+        <span class="count" data-phase="3"></span>
+        <span class="pdesc">Merge Requests, reviews, and Issues — where individual work becomes team progress.</span>
+      </div>
+      <div class="cards">
+        <article class="card reveal" data-id="g19">
+          <div class="card-top"><span class="num p3c">19</span><button class="done-btn" type="button" aria-label="Mark guide 19 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/19-create-a-merge-request.md" target="_blank" rel="noopener"><h4>Create a Merge Request</h4></a>
+          <p class="desc">The proposal: <code>Closes #12</code>, reviewers, how-to-test, and Draft MRs.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g20">
+          <div class="card-top"><span class="num p3c">20</span><button class="done-btn" type="button" aria-label="Mark guide 20 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/20-review-a-merge-request.md" target="_blank" rel="noopener"><h4>Review someone's MR</h4></a>
+          <p class="desc">Kind, specific, useful feedback — with a comment-grading vocabulary.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g21">
+          <div class="card-top"><span class="num p3c">21</span><button class="done-btn" type="button" aria-label="Mark guide 21 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/21-approve-and-merge.md" target="_blank" rel="noopener"><h4>Approve and merge</h4></a>
+          <p class="desc">The finish line: pre-merge checklist, merge options, and what auto-happens.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~8 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g22">
+          <div class="card-top"><span class="num p3c">22</span><button class="done-btn" type="button" aria-label="Mark guide 22 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/22-fix-merge-conflicts.md" target="_blank" rel="noopener"><h4>Fix merge conflicts (calmly)</h4></a>
+          <p class="desc">Three ways to resolve — GitLab UI, Web IDE, terminal — plus prevention.</p>
+          <div class="card-meta"><span class="lvl">Beginner+</span><span>⏱ ~12 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g23">
+          <div class="card-top"><span class="num p3c">23</span><button class="done-btn" type="button" aria-label="Mark guide 23 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/23-issues.md" target="_blank" rel="noopener"><h4>Issues — tasks, bugs, requests</h4></a>
+          <p class="desc">Work tracked inside the project, with templates for bugs and features.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g24">
+          <div class="card-top"><span class="num p3c">24</span><button class="done-btn" type="button" aria-label="Mark guide 24 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/24-link-issues-branches-merge-requests.md" target="_blank" rel="noopener"><h4>Linking Issues → Branches → MRs</h4></a>
+          <p class="desc">The one-click connection, the <code>Closes #n</code> keywords, auto-close magic.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~8 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g25">
+          <div class="card-top"><span class="num p3c">25</span><button class="done-btn" type="button" aria-label="Mark guide 25 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/25-readme-and-documentation.md" target="_blank" rel="noopener"><h4>READMEs &amp; documentation</h4></a>
+          <p class="desc">Docs that pass the 60-second test — with a copy-paste template.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~8 min</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase reveal" id="phase-4">
+      <div class="phase-head">
+        <span class="phase-tag p4">Part 4 · Work like FINTEC</span>
+        <h3>Real-world ready</h3>
+        <span class="count" data-phase="4"></span>
+        <span class="pdesc">The big picture, a full walkthrough, mistakes, security, and the answer page.</span>
+      </div>
+      <div class="cards">
+        <article class="card reveal" data-id="g26">
+          <div class="card-top"><span class="num p4c">26</span><button class="done-btn" type="button" aria-label="Mark guide 26 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/26-the-fintec-workflow.md" target="_blank" rel="noopener"><h4>The FINTEC workflow</h4></a>
+          <p class="desc">The whole loop on one page — steps, tools, timing, and anti-patterns.</p>
+          <div class="card-meta"><span class="lvl">Beginner</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g27">
+          <div class="card-top"><span class="num p4c">27</span><button class="done-btn" type="button" aria-label="Mark guide 27 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/27-project-walkthrough.md" target="_blank" rel="noopener"><h4>A real project, start to finish</h4></a>
+          <p class="desc">Every guide assembled into one continuous story — birth to first merge.</p>
+          <div class="card-meta"><span class="lvl">Capstone</span><span>⏱ ~15 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g28">
+          <div class="card-top"><span class="num p4c">28</span><button class="done-btn" type="button" aria-label="Mark guide 28 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/28-common-mistakes-and-recovery.md" target="_blank" rel="noopener"><h4>Common mistakes &amp; recovery</h4></a>
+          <p class="desc">14 symptom → fix first-aid entries. Keep it open in a tab, forever.</p>
+          <div class="card-meta"><span class="lvl">Reference</span><span>⏱ ~12 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g29">
+          <div class="card-top"><span class="num p4c">29</span><button class="done-btn" type="button" aria-label="Mark guide 29 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/29-security-basics.md" target="_blank" rel="noopener"><h4>Security basics</h4></a>
+          <p class="desc">Secrets, tokens, <code>.env</code> — the one rule and the leak drill. Everyone reads this.</p>
+          <div class="card-meta"><span class="lvl">Essential</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="g30">
+          <div class="card-top"><span class="num p4c">30</span><button class="done-btn" type="button" aria-label="Mark guide 30 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/30-what-do-i-do-next.md" target="_blank" rel="noopener"><h4>“What do I do next?”</h4></a>
+          <p class="desc">The everyday answer page — task index, troubleshooting table, escalation ladder.</p>
+          <div class="card-meta"><span class="lvl">Reference</span><span>⏱ ~5 min</span></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ADVANCED -->
+    <div class="phase reveal" id="phase-5">
+      <div class="phase-head">
+        <span class="phase-tag p5">Optional · Advanced</span>
+        <h3>When you're ready</h3>
+        <span class="count" data-phase="5"></span>
+        <span class="pdesc">Deliberately separate from the beginner path. Finish Parts 1–4 first.</span>
+      </div>
+      <div class="cards">
+        <article class="card reveal" data-id="a01">
+          <div class="card-top"><span class="num p5c">A1</span><button class="done-btn" type="button" aria-label="Mark guide A1 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/advanced/01-ssh-access.md" target="_blank" rel="noopener"><h4>SSH access to GitLab</h4></a>
+          <p class="desc">Key-based auth, no more token prompts — intentionally <em>not</em> the beginner default.</p>
+          <div class="card-meta"><span class="lvl">Optional</span><span>⏱ ~15 min</span></div>
+        </article>
+        <article class="card reveal" data-id="a02">
+          <div class="card-top"><span class="num p5c">A2</span><button class="done-btn" type="button" aria-label="Mark guide A2 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/advanced/02-glab-cli.md" target="_blank" rel="noopener"><h4><code>glab</code> — GitLab from the terminal</h4></a>
+          <p class="desc">Issues and Merge Requests without the browser, plus reviewing from your machine.</p>
+          <div class="card-meta"><span class="lvl">Optional</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="a03">
+          <div class="card-top"><span class="num p5c">A3</span><button class="done-btn" type="button" aria-label="Mark guide A3 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/advanced/03-protected-branches-and-approvals.md" target="_blank" rel="noopener"><h4>Protected branches &amp; approvals</h4></a>
+          <p class="desc">Maintainer configuration — the guardrails behind “you can't push to main”.</p>
+          <div class="card-meta"><span class="lvl">Maintainer</span><span>⏱ ~10 min</span></div>
+        </article>
+        <article class="card reveal" data-id="a04">
+          <div class="card-top"><span class="num p5c">A4</span><button class="done-btn" type="button" aria-label="Mark guide A4 as done">✓</button></div>
+          <a class="cardlink" href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/docs/advanced/04-git-power-moves.md" target="_blank" rel="noopener"><h4>Git power moves</h4></a>
+          <p class="desc">Stash, rebase, reflog, bisect — powerful tools with seatbelts explained first.</p>
+          <div class="card-meta"><span class="lvl">Optional</span><span>⏱ ~12 min</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="f-links">
+    <a href="https://gitlab.com/ai-fintec/git-tutorial-fintec" target="_blank" rel="noopener">📁 Project on GitLab</a>
+    <a href="https://gitlab.com/ai-fintec/git-tutorial-fintec/-/blob/main/README.md" target="_blank" rel="noopener">📖 Full guide map (README)</a>
+    <a href="mailto:finther.ai@finther.my">💬 finther.ai@finther.my</a>
+    <a href="https://docs.gitlab.com" target="_blank" rel="noopener">📗 Official GitLab docs</a>
+  </div>
+  <p class="disclaimer">
+    FINTEC AI · internal engineering resource. Items marked as recommendations are sensible defaults,
+    not official company policy unless confirmed by your team lead. Beginner path: guides 01–30 ·
+    Advanced track is optional. Purple, like our ambitions. 🟣
+  </p>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "fintec-gitlab-roadmap-v1";
+  var TOTAL_GUIDES = 30; /* beginner path drives the bar; advanced tracked separately */
+
+  function load() {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+  function save(state) {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+  }
+
+  var state = load();
+  var cards = document.querySelectorAll(".card[data-id]");
+
+  function render() {
+    var doneBeginner = 0, doneAdvanced = 0, totalAdvanced = 0;
+    cards.forEach(function (card) {
+      var id = card.getAttribute("data-id");
+      var isDone = !!state[id];
+      card.classList.toggle("done", isDone);
+      card.querySelector(".done-btn").textContent = isDone ? "✓" : "";
+      if (id.charAt(0) === "g") { if (isDone) doneBeginner++; }
+      else { totalAdvanced++; if (isDone) doneAdvanced++; }
+    });
+    var pct = Math.round((doneBeginner / TOTAL_GUIDES) * 100);
+    document.getElementById("done-count").textContent = doneBeginner;
+    document.getElementById("progress-fill").style.width = pct + "%";
+    document.getElementById("progress-pct").textContent = pct + "%" +
+      (doneAdvanced ? " · A " + doneAdvanced + "/" + totalAdvanced : "");
+    /* per-phase counters */
+    document.querySelectorAll(".count[data-phase]").forEach(function (el) {
+      var phase = el.getAttribute("data-phase");
+      var group = document.querySelectorAll('#phase-' + phase + ' .card[data-id^="g"]');
+      var n = 0;
+      group.forEach(function (c) { if (state[c.getAttribute("data-id")]) n++; });
+      el.textContent = n + "/" + group.length + " done";
+    });
+  }
+
+  cards.forEach(function (card) {
+    card.querySelector(".done-btn").addEventListener("click", function (e) {
+      e.stopPropagation();
+      var id = card.getAttribute("data-id");
+      if (state[id]) { delete state[id]; } else { state[id] = true; }
+      save(state);
+      render();
+    });
+  });
+
+  document.getElementById("reset-btn").addEventListener("click", function () {
+    state = {};
+    save(state);
+    render();
+  });
+
+  /* reveal-on-scroll */
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("visible"); });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
