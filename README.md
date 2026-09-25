@@ -180,6 +180,8 @@ See it run end-to-end in **[26 · The FINTEC workflow](docs/26-the-fintec-workfl
      Stuck?           30 · "What do I do next?"
 ```
 
+> ⌨️ **Just want commands to copy-paste?** → **[basic-commands.md](basic-commands.md)** — setup → clone → work → push for this exact repo, minimal words.
+
 ---
 
 ## For maintainers of this guide

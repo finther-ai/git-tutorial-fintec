@@ -75,6 +75,8 @@ git push -u origin 15-fix-nav   # 6. share it
 
 Six commands. That's the job. 🎯
 
+> ⌨️ **Prefer pure copy-paste?** → **[basic-commands.md](../basic-commands.md)** — the whole flow (setup → clone → work → push) as paste-ready blocks, using this repo as the example.
+
 ## Reference tables
 
 ### Look (read-only — safe, run anytime)
